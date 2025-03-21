@@ -1,3 +1,66 @@
+# 🦄 Uniswap v4 Workshop
+
+## **📌 Overview**  
+Welcome to the **Uniswap v4** workshop! 🎉 This session will provide a **deep dive** into the **newest version of Uniswap**, covering the architectural changes, **how to build custom hooks**, and **deploy your own Uniswap v4 liquidity pool**.  
+
+📜 **Slides**: [Insert Link]  
+
+---
+
+## **💡 What is Uniswap v4?**  
+Uniswap v4 is the **next evolution** of Automated Market Makers (AMMs), introducing:  
+- **🪝 Hooks** – Customizable logic that executes **before, during, or after** swaps.  
+- **🏛️ Singleton Architecture** – All pools exist within **a single contract**, reducing gas costs.  
+- **⚡ Flash Accounting** – More **efficient token transfers**, saving **gas fees**.  
+- **💰 Custom Fee Structures** – Developers can set **dynamic fees** via hooks.  
+
+---
+
+## **🔍 Understanding AMMs**  
+An **Automated Market Maker (AMM)** is a decentralized exchange mechanism that **replaces order books with liquidity pools**.
+
+### **🔹 Key Concepts**
+- **Liquidity Pools**: Users deposit tokens into smart contracts to facilitate swaps.  
+- **Constant Product Formula**: `x * y = k` ensures price adjusts with supply & demand.  
+- **Liquidity Providers (LPs)**: Earn fees by supplying assets to pools.  
+- **Price Slippage**: Large trades impact price due to liquidity depth.  
+
+### **🔄 What’s new in Uniswap v4’s AMM model?**
+- **Flash Accounting** reduces redundant token transfers.  
+- **Custom Hooks** allow **programmable** pool behavior (e.g., on-chain limit orders).  
+- **More flexible LP strategies** via **custom fee mechanisms**.  
+
+---
+
+## **⚙️ Architecture Deep Dive: PoolManager & Hooks**  
+
+### **📌 The `PoolManager` Contract**
+In **Uniswap v4**, **pools are no longer standalone contracts**.  
+Instead, all pools live inside **one contract**: `PoolManager`.
+
+### **💡 How Hooks Work**
+Hooks allow developers to **inject custom logic** at different stages of a swap or liquidity event:
+1. **BeforeSwap** – Modify trade behavior (e.g., tax fees, KYC checks).  
+2. **AfterSwap** – Implement **rebates, dynamic fees, or token burns**.  
+3. **BeforeAddLiquidity** – Enforce **whitelists or LP conditions**.  
+4. **AfterRemoveLiquidity** – Auto-compound fees or distribute rewards.  
+
+🚀 **This workshop will guide you through building a custom Hook!**
+
+---
+
+## **🛠 Prerequisites**  
+
+🔹 **Basic Solidity knowledge** – Comfortable with writing & deploying smart contracts.  
+🔹 **Foundry installed** – A powerful Ethereum development tool.  
+
+To install Foundry and set up the environment, follow the **"Set up"** section in the **Uniswap v4 template** below.
+
+## **🛠 Using the Uniswap v4 Template**
+This workshop is built on top of the **Uniswap v4 Hook Template**. 
+
+You can use these resources to extend your knowledge and experiment with additional custom hook implementations.
+
 # v4-template
 ### **A template for writing Uniswap v4 Hooks 🦄**
 
@@ -21,15 +84,11 @@ git merge template/main <BRANCH> --allow-unrelated-histories
 ---
 
 ### Check Forge Installation
-*Ensure that you have correctly installed Foundry (Forge) Stable. You can update Foundry by running:*
+*Ensure that you have correctly installed Foundry (Forge) and that it's up to date. You can update Foundry by running:*
 
 ```
 foundryup
 ```
-
-> *v4-template* appears to be _incompatible_ with Foundry Nightly. See [foundry announcements](https://book.getfoundry.sh/announcements) to revert back to the stable build
-
-
 
 ## Set up
 
@@ -43,6 +102,38 @@ forge test
 ### Local Development (Anvil)
 
 Other than writing unit tests (recommended!), you can only deploy & test hooks on [anvil](https://book.getfoundry.sh/anvil/)
+
+## Scripts Folder Overview
+
+The scripts folder contains Solidity scripts that help automate smart contract deployment and interaction on the blockchain. Scripting in Foundry provides several key capabilities:
+
+- Deploy smart contracts programmatically with custom initialization parameters
+- Interact with deployed contracts by calling functions and sending transactions
+- Chain multiple contract interactions together in a single script
+- Test deployment flows before running them on mainnet
+- Configure deployment settings and parameters in a reusable way
+
+### Structure
+
+The scripts folder is organized into several key components:
+
+1. **Base Configuration (base/)**
+   - `Config.sol`: Defines shared configuration used across deployment scripts, including:
+     - Test token addresses for local development
+     - Hook contract addresses and parameters
+     - Currency type wrappers for proper token handling
+     - This configuration is used by scripts like `Anvil.s.sol` to ensure consistent deployment settings
+
+2. **Deployment Scripts**
+   - Scripts that handle the actual contract deployment logic
+   - Use the base configurations to deploy with proper parameters
+   - Example: `Anvil.s.sol` for local testnet deployment
+
+3. **Interaction Scripts** 
+   - Scripts for post-deployment contract interactions
+   - Leverage the deployed contract addresses from Config.sol
+
+The Config.sol file acts as a central source of truth for contract addresses and parameters, making scripts more maintainable and reducing duplicate configuration across different deployment scenarios.
 
 ```bash
 # start anvil, a local EVM chain
@@ -97,4 +188,3 @@ Additional resources:
 [v4-core](https://github.com/uniswap/v4-core)
 
 [v4-by-example](https://v4-by-example.org)
-

@@ -12,6 +12,9 @@ contract Config {
     IERC20 constant token1 = IERC20(address(0xa513E6E4b8f2a923D98304ec87F64353C4D5C853));
     IHooks constant hookContract = IHooks(address(0x0));
 
+    // @notice Currency type is required for Foundry scripts to properly handle token addresses during deployment
+    // @dev Currency.wrap() provides type safety by converting raw addresses into strongly typed identifiers
+    // This ensures tokens are handled correctly when deploying contracts and prevents address mixups
     Currency constant currency0 = Currency.wrap(address(token0));
     Currency constant currency1 = Currency.wrap(address(token1));
 }
