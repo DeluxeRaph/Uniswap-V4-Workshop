@@ -113,28 +113,6 @@ The scripts folder contains Solidity scripts that help automate smart contract d
 - Test deployment flows before running them on mainnet
 - Configure deployment settings and parameters in a reusable way
 
-### Structure
-
-The scripts folder is organized into several key components:
-
-1. **Base Configuration (base/)**
-   - `Config.sol`: Defines shared configuration used across deployment scripts, including:
-     - Test token addresses for local development
-     - Hook contract addresses and parameters
-     - Currency type wrappers for proper token handling
-     - This configuration is used by scripts like `Anvil.s.sol` to ensure consistent deployment settings
-
-2. **Deployment Scripts**
-   - Scripts that handle the actual contract deployment logic
-   - Use the base configurations to deploy with proper parameters
-   - Example: `Anvil.s.sol` for local testnet deployment
-
-3. **Interaction Scripts** 
-   - Scripts for post-deployment contract interactions
-   - Leverage the deployed contract addresses from Config.sol
-
-The Config.sol file acts as a central source of truth for contract addresses and parameters, making scripts more maintainable and reducing duplicate configuration across different deployment scenarios.
-
 ```bash
 # start anvil, a local EVM chain
 anvil
